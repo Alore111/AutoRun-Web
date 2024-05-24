@@ -6,6 +6,9 @@
 ## 软件架构
 基于python的flask框架开发
 
+## 软件界面
+![alt text](image.png)
+
 ## 安装
 一，在电脑上部署Python开发环境
 

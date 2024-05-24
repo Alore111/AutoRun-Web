@@ -1,2 +1,5 @@
 test.py
 track.py
+.idea
+__pycache__/
+*.pyc
