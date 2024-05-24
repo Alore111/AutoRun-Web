@@ -1,0 +1,5 @@
+Flask==3.0.2
+folium==0.15.1
+geopy==2.4.1
+matplotlib==3.7.0
+Requests==2.31.0

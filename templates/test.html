@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高德地图坐标点移动轨迹展示</title>
+    <script src="https://webapi.amap.com/maps?v=2.0&key=	864f2b31e0b6558c0e4ade5157767fd1"></script>
+    <style>
+        #map {
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <h2>高德地图坐标点移动轨迹展示</h2>
+    <div id="map"></div>
+
+    <script>
+        window.onload = function() {
+            // 创建地图实例
+            var map = new AMap.Map('map', {
+                center: [104.305372,30.606442], // 初始地图中心点
+                zoom: 17 // 初始地图缩放级别
+            });
+
+            // 发起 AJAX 请求获取坐标点数据
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://124.70.222.169:9451/api/getTrack', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // 获取到数据后进行处理
+                        var trackData = JSON.parse(xhr.responseText);
+
+                        // 从 JSON 数据中提取 track 字段的值
+                        var trackValue = trackData.track;
+
+                        // 去除字符串开头和结尾的方括号
+                        trackValue = trackValue.replace(/^\[|\]$/g, '');
+
+                        // 使用 replace() 方法去除双引号
+                        trackValue = trackValue.replace(/"/g, '');
+
+                        // 将数据字符串以逗号分割成数组
+                        var trackArray = trackValue.split(',');     
+
+                        // 初始化一个空数组，用于存储提取到的经纬度信息
+                        var coordinates = [];
+
+                        // 遍历整个数据数组，逐个提取经纬度信息
+                        for (var i = 0; i < trackArray.length; i += 1) {
+                            // 获取当前元素
+                            var point = trackArray[i];
+                            // 将每个元素以连字符分割成经度和纬度
+                            var coords = point.split('-');
+                            // 将经度和纬度作为数组添加到 coordinates 数组中
+                            coordinates.push([parseFloat(coords[0]), parseFloat(coords[1])]);
+                        }
+                        
+                        // 调用绘制轨迹的函数
+                        displayTrack(coordinates);
+                    } else {
+                        console.error('请求失败：' + xhr.status);
+                    }
+                }
+            };
+            xhr.send();
+
+            // 处理数据并在地图上展示
+            function displayTrack(coordinates) {
+                // 创建轨迹线对象
+                var polyline = new AMap.Polyline({
+                    path: coordinates, // 设置轨迹线坐标数组
+                    strokeColor: '#FF0000', // 轨迹线颜色
+                    strokeWeight: 3, // 轨迹线宽度
+                    strokeOpacity: 1 // 轨迹线透明度
+                });
+
+                // 将轨迹线添加到地图中
+                map.add(polyline);
+
+                // 添加起点和终点标记
+                var startPoint = coordinates[0]; // 起点坐标
+                var endPoint = coordinates[coordinates.length - 1]; // 终点坐标
+                addMarker(startPoint, '起点'); // 定义起点标记的样式和图标
+                addMarker(endPoint, '终点'); // 定义终点标记的样式和图标
+
+                // 调整地图视角以展示整条轨迹
+                map.setFitView();
+                                
+            }
+
+            // 添加标记函数
+            function addMarker(position, title) {
+                // 自定义起点和终点标记的图标
+                var iconUrl = './起点图标.png';
+
+                // 创建图标标记对象
+                var marker = new AMap.Marker({
+                    position: position, // 标记位置
+                    title: title, // 标记标题
+                    offset: new AMap.Pixel(-12.5, -25), // 调整图标的原点位置
+                    icon: new AMap.Icon({
+                        size: new AMap.Size(25, 25),  // 图标尺寸
+                        image: iconUrl, // 图标的 URL
+                        imageSize: new AMap.Size(30, 30)  // 图标显示大小
+                    })
+                });
+
+                // 创建文本标签对象
+                var label = new AMap.Text({
+                    text: title, // 文本内容
+                    position: position, // 文本位置，与标记位置一致
+                    offset: new AMap.Pixel(0, -30), // 设置标签的偏移量，使其显示在标记的正上方
+                    style: {
+                        color: 'bule', // 文本颜色
+                        fontSize: 5, // 文本字号
+                        fontWeight: 'bold' // 文本加粗
+                    }
+                });
+
+                // 将文本标签添加到地图中
+                label.setMap(map);
+
+                // 将图标标记添加到地图中
+                marker.setMap(map);
+            }
+        };
+    </script>
+</body>
+</html>

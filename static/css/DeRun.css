@@ -1,0 +1,78 @@
+body{
+    font-family: Arial, sans-serif;
+    margin-top: 0;
+    margin-left: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.left_container{
+    width: 100%;
+}
+
+.left {
+    flex: 1;
+    display: flex;
+    height: 100vh;
+    padding: 20px;
+    background-color: rgb(255 217 217);
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.right {
+    flex: 2;
+    height: 100vh;
+    /* padding: 20px; */
+}
+.form-group {
+    margin-bottom: 20px;
+    max-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.button-group {
+    display: flex;
+    margin-bottom: 20px;
+    max-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+input[type="text"], input[type="number"], input[type="password"], select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.submit-btn {
+    background-color: #66e86b;
+    display: block;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.submit-btn:hover {
+    background-color: #64d269;
+}
+
+
+#map {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    margin-top: 0;
+    margin-left: 0;
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeRun</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/DeRun.css') }}">
+    <script src="https://webapi.amap.com/maps?v=2.0&key=864f2b31e0b6558c0e4ade5157767fd1"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="left">
+            <div class="left_container">
+                <form id="runForm">
+                    <div class="form-group">
+                        <label for="phone">手机号:</label>
+                        <input type="text" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">密码:</label>
+                        <input type="password" id="password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="run_distance">跑步距离（±200米）:</label>
+                        <input type="number" id="run_distance" name="run_distance">
+                    </div>
+                    <div class="form-group">
+                        <label for="run_time">跑步时间（分钟）:</label>
+                        <input type="number" id="run_time" name="run_time">
+                    </div>
+                    <div class="form-group">
+                        <label for="school_site">校区:</label>
+                        <select id="school_site" name="school_site">
+                            <option value="0">航空港</option>
+                            <option value="1">龙泉</option>
+                        </select>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="submit-btn" id="rand-tack-btn">随机路径</button>
+                        <button type="button" class="submit-btn" id="submit-btn">提交</button>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+        <div class="right">
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/DeRun.js') }}"></script>
+
+</body>
+
+</html>
